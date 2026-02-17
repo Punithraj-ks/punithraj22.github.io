@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calm Banking — Case Study · Punith Raj</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --cream: #FFFDF8; --beige: #F5F3ED; --black: #0D0D0D;
+      --charcoal: #2D2D2D; --blue: #1565C0; --blue-light: #4B9EFF;
+      --gray: #8A8880; --border: #E8E6E0; --orange: #FF6B35;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--cream); color: var(--charcoal); font-family: var(--font-body); font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; justify-content: space-between; align-items: center; padding: 20px 48px; background: rgba(255,253,248,0.9); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+    .nav-logo { font-family: var(--font-mono); font-size: 13px; color: var(--black); letter-spacing: 0.08em; text-decoration: none; }
+    .nav-back { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gray); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--blue); }
+
+    .hero { padding: 140px 48px 80px; max-width: 1100px; margin: 0 auto; }
+    .case-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 20px; display: flex; align-items: center; gap: 12px; }
+    .case-label::before { content: ''; width: 32px; height: 1px; background: var(--blue); }
+    h1 { font-family: var(--font-display); font-size: clamp(40px, 5vw, 72px); font-weight: 900; color: var(--black); line-height: 1.05; letter-spacing: -0.02em; margin-bottom: 28px; }
+    .hero-desc { font-size: 18px; color: var(--charcoal); max-width: 640px; line-height: 1.75; margin-bottom: 48px; }
+
+    .meta-bar { display: flex; gap: 40px; flex-wrap: wrap; padding: 32px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 60px; }
+    .meta-item { display: flex; flex-direction: column; gap: 6px; }
+    .meta-key { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gray); }
+    .meta-val { font-size: 15px; color: var(--black); font-weight: 500; }
+
+    .hero-img { width: 100%; border-radius: 4px; overflow: hidden; margin-bottom: 80px; background: #0A1628; }
+    .hero-img img { width: 100%; display: block; }
+
+    .content { max-width: 760px; margin: 0 auto; padding: 0 48px 80px; }
+    .section { margin-bottom: 72px; }
+    .section-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); margin-bottom: 16px; }
+    h2 { font-family: var(--font-display); font-size: clamp(28px, 3vw, 42px); font-weight: 700; color: var(--black); margin-bottom: 20px; line-height: 1.2; }
+    p { font-size: 16px; line-height: 1.8; color: var(--charcoal); margin-bottom: 16px; }
+    p strong { color: var(--black); font-weight: 500; }
+
+    .hypothesis-block { background: var(--black); color: var(--cream); padding: 40px; margin: 32px 0; border-left: 4px solid var(--blue-light); }
+    .hypothesis-label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue-light); margin-bottom: 12px; }
+    .hypothesis-text { font-family: var(--font-display); font-size: clamp(18px, 2.5vw, 24px); font-weight: 700; line-height: 1.4; }
+
+    .principle-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+    .principle-card { border: 1px solid var(--border); padding: 28px; }
+    .principle-tag { font-family: var(--font-mono); font-size: 10px; color: var(--blue); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+    .principle-title { font-size: 15px; font-weight: 600; color: var(--black); margin-bottom: 8px; }
+    .principle-desc { font-size: 13px; color: var(--charcoal); line-height: 1.65; }
+
+    .screens-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; }
+    .screen-card { background: var(--beige); border: 1px solid var(--border); padding: 20px; }
+    .screen-num { font-family: var(--font-mono); font-size: 10px; color: var(--gray); letter-spacing: 0.1em; margin-bottom: 8px; }
+    .screen-name { font-size: 14px; font-weight: 600; color: var(--black); margin-bottom: 6px; }
+    .screen-desc { font-size: 12px; color: var(--gray); line-height: 1.5; }
+
+    .validation-bar { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 32px 0; }
+    .val-item { text-align: center; padding: 28px 16px; background: var(--beige); border: 1px solid var(--border); }
+    .val-num { font-family: var(--font-display); font-size: 44px; font-weight: 900; color: var(--blue); line-height: 1; margin-bottom: 8px; }
+    .val-label { font-family: var(--font-mono); font-size: 10px; color: var(--gray); letter-spacing: 0.08em; text-transform: uppercase; line-height: 1.4; }
+
+    .screen-showcase { margin: 40px -48px; }
+    .screen-showcase img { width: 100%; display: block; }
+    .screen-caption { padding: 16px 48px; font-family: var(--font-mono); font-size: 11px; color: var(--gray); letter-spacing: 0.08em; border-bottom: 1px solid var(--border); }
+
+    .learning-list { margin: 24px 0; }
+    .learning-item { display: flex; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--border); }
+    .learning-num { font-family: var(--font-mono); font-size: 11px; color: var(--blue); min-width: 28px; padding-top: 2px; }
+    .learning-title { font-size: 15px; font-weight: 500; color: var(--black); margin-bottom: 6px; }
+    .learning-desc { font-size: 14px; color: var(--gray); line-height: 1.6; }
+
+    .nav-footer { display: flex; justify-content: space-between; align-items: center; padding: 48px; border-top: 1px solid var(--border); max-width: 1100px; margin: 0 auto; }
+    .nav-footer a { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--charcoal); text-decoration: none; padding: 14px 24px; border: 1px solid var(--border); transition: all 0.2s; }
+    .nav-footer a:hover { border-color: var(--blue); color: var(--blue); }
+    .nav-footer a.primary { background: var(--black); color: var(--cream); border-color: var(--black); }
+    .nav-footer a.primary:hover { background: var(--blue); border-color: var(--blue); }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 24px; }
+      .hero { padding: 100px 24px 60px; }
+      .content { padding: 0 24px 60px; }
+      .principle-grid, .screens-grid { grid-template-columns: 1fr; }
+      .validation-bar { grid-template-columns: 1fr; }
+      .screen-showcase { margin: 40px -24px; }
+      .screen-caption { padding: 16px 24px; }
+      .nav-footer { padding: 32px 24px; flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a href="index.html" class="nav-logo">← Punith Raj</a>
+    <a href="https://www.figma.com/design/q5fnNyBx2mPbNyUiMc5BHS/Figma-Case-Studies?node-id=0-1&t=foaWDBpFxP266CHM-1" target="_blank" class="nav-back">View Figma ↗</a>
+  </nav>
+
+  <div class="hero">
+    <div class="case-label">03 — Hypothesis-Driven Design</div>
+    <h1>Calm Banking — Does Visual Restraint Build More Trust?</h1>
+    <p class="hero-desc">Most banking apps are designed for engagement — notifications, nudges, upsell prompts. I started with the opposite hypothesis: that a calmer, more restrained interface would build deeper trust for routine tasks like checking balance and reviewing transactions.</p>
+
+    <div class="meta-bar">
+      <div class="meta-item"><span class="meta-key">Role</span><span class="meta-val">UI Designer</span></div>
+      <div class="meta-item"><span class="meta-key">Screens</span><span class="meta-val">5 Core Flows</span></div>
+      <div class="meta-item"><span class="meta-key">Testing</span><span class="meta-val">5 Preference Participants</span></div>
+      <div class="meta-item"><span class="meta-key">Tools</span><span class="meta-val">Figma</span></div>
+      <div class="meta-item"><span class="meta-key">Outcome</span><span class="meta-val">5/5 Preferred Calm Design</span></div>
+    </div>
+
+    <div class="hero-img">
+      <img src="banking-thumb.png" alt="Calm Banking UI — 5 screens" />
+    </div>
+  </div>
+
+  <div class="content">
+
+    <div class="section">
+      <div class="section-label">The Hypothesis</div>
+      <h2>Starting with a testable question</h2>
+      <p>Most banking apps optimise for engagement: more taps, more features, more time in app. But banking isn't social media. People open their banking app to complete a task quickly and leave with confidence.</p>
+      <p>The question I wanted to answer was specific and testable:</p>
+
+      <div class="hypothesis-block">
+        <div class="hypothesis-label">Design Hypothesis</div>
+        <div class="hypothesis-text">For routine banking tasks, a visually restrained interface will be preferred over a feature-rich, engagement-optimised alternative.</div>
+      </div>
+
+      <p>Rather than designing what I thought looked good, I designed to test this claim — then validated it with real participants.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Design Principles</div>
+      <h2>Four constraints that shaped every decision</h2>
+
+      <div class="principle-grid">
+        <div class="principle-card">
+          <div class="principle-tag">Principle 01</div>
+          <div class="principle-title">Colour carries meaning, not decoration</div>
+          <div class="principle-desc">Green for incoming transactions. Red for outgoing. Blue for primary actions. No colour is used decoratively. If removing a colour doesn't break comprehension, it doesn't belong.</div>
+        </div>
+        <div class="principle-card">
+          <div class="principle-tag">Principle 02</div>
+          <div class="principle-title">8px grid without exceptions</div>
+          <div class="principle-desc">Every element placed on an 8px grid. The visual consistency this creates isn't noticed consciously — but its absence creates unease. Spatial rhythm is a form of trust signal.</div>
+        </div>
+        <div class="principle-card">
+          <div class="principle-tag">Principle 03</div>
+          <div class="principle-title">Typography does the heavy lifting</div>
+          <div class="principle-desc">Clear hierarchy: balance (large, bold), recent activity (medium, regular), metadata (small, muted). The user's eye follows a predictable path every time they open the app.</div>
+        </div>
+        <div class="principle-card">
+          <div class="principle-tag">Principle 04</div>
+          <div class="principle-title">Invisible design for routine tasks</div>
+          <div class="principle-desc">Checking balance, reviewing a transaction, making a payment — these are routine. The design should feel like switching on a light: instant, effortless, unremarkable. Good design disappears.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">The 5 Screens</div>
+      <h2>One flow, five moments</h2>
+      <p>I designed exactly the screens a user encounters in their most common banking session — open app, check balance, review transaction, confirm payment, manage account. No extra screens. No edge cases.</p>
+
+      <div class="screens-grid">
+        <div class="screen-card">
+          <div class="screen-num">Screen 01</div>
+          <div class="screen-name">Home / Balance</div>
+          <div class="screen-desc">Large balance figure, muted secondary info, recent activity below. One action: Make a payment. Nothing competes for attention.</div>
+        </div>
+        <div class="screen-card">
+          <div class="screen-num">Screen 02</div>
+          <div class="screen-name">Transaction List</div>
+          <div class="screen-desc">Chronological grouping (Today / Yesterday / Earlier). Semantic colour only. No categories, no charts — just the list, clearly readable.</div>
+        </div>
+        <div class="screen-card">
+          <div class="screen-num">Screen 03</div>
+          <div class="screen-name">Transaction Detail</div>
+          <div class="screen-desc">Full transaction metadata on a clean white surface. "Completed" status in green. No decorative elements. Information density is high but visual noise is zero.</div>
+        </div>
+        <div class="screen-card">
+          <div class="screen-num">Screen 04</div>
+          <div class="screen-name">Payment Confirmed</div>
+          <div class="screen-desc">Single green checkmark. Payment amount. Reference number. One CTA: Done. The confirmation moment is designed to feel like a full stop — complete and calm.</div>
+        </div>
+        <div class="screen-card" style="grid-column: 1 / -1;">
+          <div class="screen-num">Screen 05</div>
+          <div class="screen-name">Account / Settings</div>
+          <div class="screen-desc">Profile information, security settings, notification preferences, and payment methods — organised with clear section headers and consistent row spacing. Scannable without effort.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Validation</div>
+      <h2>The hypothesis held.</h2>
+      <p>I showed both versions (calm vs. engagement-optimised) to 5 participants and asked them to complete the same tasks on each, then state their preference and explain why.</p>
+
+      <div class="validation-bar">
+        <div class="val-item">
+          <div class="val-num">5/5</div>
+          <div class="val-label">Preferred the calm design for routine tasks</div>
+        </div>
+        <div class="val-item">
+          <div class="val-num">5/5</div>
+          <div class="val-label">Completed all tasks faster on calm version</div>
+        </div>
+        <div class="val-item">
+          <div class="val-num">5/5</div>
+          <div class="val-label">Described calm version as "more trustworthy"</div>
+        </div>
+      </div>
+
+      <p>Common participant language: <strong>"less stressful," "easier to find what I need," "feels like a proper bank."</strong> The engagement-heavy version was described as "too much," "like an ad," and "trying too hard."</p>
+    </div>
+
+    <div class="screen-showcase">
+      <img src="banking-thumb.png" alt="All 5 Calm Banking screens" />
+      <div class="screen-caption">All 5 screens — Home, Transactions, Transaction Detail, Payment Confirmed, Account Settings</div>
+    </div>
+
+    <div class="section" style="margin-top:60px;">
+      <div class="section-label">What I Learned</div>
+      <h2>Three things this project taught me</h2>
+      <div class="learning-list">
+        <div class="learning-item">
+          <span class="learning-num">01</span>
+          <div>
+            <div class="learning-title">Constraints are creative tools</div>
+            <div class="learning-desc">Limiting colour to semantic meaning only forced me to use typography and spacing to create hierarchy. The constraint produced better design than freedom would have.</div>
+          </div>
+        </div>
+        <div class="learning-item">
+          <span class="learning-num">02</span>
+          <div>
+            <div class="learning-title">Starting with a hypothesis changes how you design</div>
+            <div class="learning-desc">When you design to test a claim, every decision becomes intentional and evaluable. "Does this support or contradict the hypothesis?" is a better question than "does this look good?"</div>
+          </div>
+        </div>
+        <div class="learning-item">
+          <span class="learning-num">03</span>
+          <div>
+            <div class="learning-title">Trust is a design outcome, not an aesthetic</div>
+            <div class="learning-desc">Participants used the word "trustworthy" unprompted. Trust came from predictability, consistency, and clarity — not from a specific visual style. The calm design earned trust because it behaved exactly as expected, every time.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="nav-footer">
+    <a href="kirana.html">← Kirana Khata</a>
+    <a href="https://www.figma.com/design/q5fnNyBx2mPbNyUiMc5BHS/Figma-Case-Studies?node-id=0-1&t=foaWDBpFxP266CHM-1" target="_blank" class="primary">View Figma ↗</a>
+    <a href="index.html">Back to all work →</a>
+  </div>
+
+</body>
+</html>
