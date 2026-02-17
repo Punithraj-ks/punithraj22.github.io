@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Punith Raj — UX Designer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream:   #FFFDF8;
+      --beige:   #F5F3ED;
+      --black:   #0D0D0D;
+      --charcoal:#2D2D2D;
+      --orange:  #FF6B35;
+      --gray:    #8A8880;
+      --border:  #E8E6E0;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    .cursor {
+      position: fixed;
+      width: 10px; height: 10px;
+      background: var(--orange);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.15s ease;
+      transform: translate(-50%, -50%);
+    }
+    .cursor-ring {
+      position: fixed;
+      width: 36px; height: 36px;
+      border: 1.5px solid var(--orange);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.08s linear, width 0.3s, height 0.3s, opacity 0.3s;
+      transform: translate(-50%, -50%);
+      opacity: 0.5;
+    }
+    body:hover .cursor { opacity: 1; }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 1000;
+      opacity: 0.4;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 48px;
+      background: rgba(255,253,248,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--black);
+      letter-spacing: 0.08em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gray);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--orange); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 120px 48px 80px;
+      gap: 48px;
+      position: relative;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 15%; right: -80px;
+      width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(255,107,53,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .hero-label::before {
+      content: '';
+      width: 32px; height: 1px;
+      background: var(--orange);
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(52px, 6vw, 88px);
+      font-weight: 900;
+      line-height: 1.0;
+      color: var(--black);
+      margin-bottom: 28px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--orange);
+    }
+
+    .hero-bio {
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--charcoal);
+      max-width: 480px;
+      margin-bottom: 44px;
+    }
+
+    .hero-bio strong {
+      color: var(--black);
+      font-weight: 500;
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: var(--black);
+      color: var(--cream);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid var(--black);
+      transition: all 0.25s ease;
+    }
+
+    .btn-primary:hover {
+      background: var(--orange);
+      border-color: var(--orange);
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--black);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 28px;
+      background: transparent;
+      color: var(--black);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      border: 2px solid var(--border);
+      transition: all 0.25s ease;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--black);
+      transform: translate(-2px, -2px);
+      box-shadow: 4px 4px 0 var(--border);
+    }
+
+    /* Hero right - decorative */
+    .hero-visual {
+      position: relative;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-card {
+      background: var(--beige);
+      border: 1px solid var(--border);
+      padding: 40px;
+      width: 100%;
+      max-width: 380px;
+      position: relative;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border: 1.5px dashed var(--orange);
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .hero-avatar {
+      width: 72px; height: 72px;
+      background: var(--black);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 20px;
+    }
+
+    .hero-card-name {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--black);
+      margin-bottom: 4px;
+    }
+
+    .hero-card-role {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      color: var(--orange);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      border-top: 1px solid var(--border);
+      padding-top: 24px;
+    }
+
+    .stat-item {}
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 900;
+      color: var(--black);
+      line-height: 1;
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      color: var(--gray);
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .skills-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .chip {
+      padding: 5px 12px;
+      background: var(--cream);
+      border: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      color: var(--charcoal);
+    }
+
+    /* ── SECTION BASE ── */
+    section {
+      padding: 100px 48px;
+    }
+
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      max-width: 60px;
+      height: 1px;
+      background: var(--orange);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 4vw, 56px);
+      font-weight: 900;
+      color: var(--black);
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+
+    .section-sub {
+      font-size: 16px;
+      color: var(--gray);
+      max-width: 560px;
+      margin-bottom: 60px;
+    }
+
+    /* ── WORK SECTION ── */
+    #work { background: var(--cream); }
+
+    .work-grid {
+      display: grid;
+      gap: 2px;
+    }
+
+    .case-card {
+      background: var(--beige);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 420px;
+      overflow: hidden;
+      position: relative;
+      transition: transform 0.3s ease;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .case-card:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 6px 6px 0 var(--border);
+      z-index: 2;
+    }
+
+    .case-card.featured {
+      grid-column: 1 / -1;
+      min-height: 520px;
+    }
+
+    .case-info {
+      padding: 52px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .case-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      border: 1px solid var(--orange);
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 24px;
+      width: fit-content;
+    }
+
+    .case-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--gray);
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .case-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 3vw, 44px);
+      font-weight: 700;
+      color: var(--black);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+
+    .case-desc {
+      font-size: 15px;
+      color: var(--charcoal);
+      line-height: 1.7;
+      margin-bottom: 32px;
+      max-width: 420px;
+    }
+
+    .case-meta {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .meta-key {
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray);
+    }
+
+    .meta-val {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--black);
+    }
+
+    .case-arrow {
+      font-size: 20px;
+      color: var(--orange);
+      margin-top: 28px;
+      display: inline-block;
+      transition: transform 0.2s;
+    }
+
+    .case-card:hover .case-arrow { transform: translate(4px, -4px); }
+
+    .case-visual {
+      background: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      min-height: 320px;
+    }
+
+    .case-visual-inner {
+      width: 85%;
+      height: 85%;
+      border: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    /* Happenin mockup visual */
+    .mockup-happenin {
+      width: 160px;
+      background: #FFFDF8;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+
+    .mockup-header {
+      background: #0D0D0D;
+      padding: 10px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .mockup-logo {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 700;
+      color: #FFFDF8;
+    }
+
+    .mockup-body {
+      padding: 12px;
+    }
+
+    .mockup-chip-row {
+      display: flex;
+      gap: 4px;
+      margin-bottom: 10px;
+    }
+
+    .mockup-chip {
+      padding: 2px 6px;
+      background: #0D0D0D;
+      border-radius: 2px;
+      font-size: 6px;
+      color: #FFFDF8;
+      font-family: var(--font-mono);
+    }
+
+    .mockup-chip.active {
+      background: #FF6B35;
+    }
+
+    .mockup-card {
+      background: #F5F3ED;
+      border-radius: 6px;
+      padding: 8px;
+      margin-bottom: 6px;
+    }
+
+    .mockup-card-img {
+      width: 100%;
+      height: 52px;
+      background: linear-gradient(135deg, #1a1a2e, #16213e);
+      border-radius: 3px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+    }
+
+    .mockup-card-title {
+      font-size: 7px;
+      font-weight: 600;
+      color: #0D0D0D;
+      margin-bottom: 3px;
+      font-family: var(--font-body);
+    }
+
+    .mockup-price {
+      font-size: 7px;
+      color: #FF6B35;
+      font-family: var(--font-mono);
+      font-weight: 600;
+    }
+
+    .mockup-btn {
+      background: #0D0D0D;
+      color: #FFFDF8;
+      padding: 4px;
+      text-align: center;
+      font-size: 6px;
+      border-radius: 3px;
+      margin-top: 6px;
+      font-family: var(--font-mono);
+    }
+
+    .mockup-nav {
+      background: #0D0D0D;
+      padding: 8px 12px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .mockup-nav-dot {
+      width: 4px; height: 4px;
+      background: #8A8880;
+      border-radius: 50%;
+    }
+
+    .mockup-nav-dot.active {
+      background: #FF6B35;
+      width: 12px;
+      border-radius: 2px;
+    }
+
+    /* Generic project visuals */
+    .visual-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .visual-icon {
+      font-size: 64px;
+      opacity: 0.15;
+    }
+
+    .visual-coming {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.2);
+    }
+
+    .case-visual.light {
+      background: var(--beige);
+    }
+
+    /* ── ABOUT SECTION ── */
+    #about {
+      background: var(--black);
+      color: var(--cream);
+    }
+
+    #about .section-title { color: var(--cream); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .about-text p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: rgba(255,253,248,0.75);
+      margin-bottom: 20px;
+    }
+
+    .about-text p strong {
+      color: var(--cream);
+      font-weight: 500;
+    }
+
+    .about-text p em {
+      color: var(--orange);
+      font-style: normal;
+    }
+
+    .about-right {}
+
+    .skills-section {}
+    .skills-title {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--orange);
+      margin-bottom: 20px;
+    }
+
+    .skill-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px solid rgba(255,253,248,0.08);
+    }
+
+    .skill-name {
+      font-size: 14px;
+      color: rgba(255,253,248,0.8);
+    }
+
+    .skill-bar-wrap {
+      width: 140px;
+      height: 2px;
+      background: rgba(255,253,248,0.1);
+    }
+
+    .skill-bar {
+      height: 100%;
+      background: var(--orange);
+      transition: width 1.5s ease;
+    }
+
+    .process-list {
+      margin-top: 40px;
+    }
+
+    .process-item {
+      display: flex;
+      gap: 20px;
+      padding: 20px 0;
+      border-bottom: 1px solid rgba(255,253,248,0.08);
+    }
+
+    .process-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--orange);
+      min-width: 28px;
+    }
+
+    .process-content {}
+    .process-name {
+      font-size: 15px;
+      color: var(--cream);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .process-desc {
+      font-size: 13px;
+      color: rgba(255,253,248,0.45);
+      line-height: 1.5;
+    }
+
+    /* ── CONTACT ── */
+    #contact {
+      background: var(--cream);
+      text-align: center;
+    }
+
+    .contact-inner {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .contact-email {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: clamp(24px, 3vw, 40px);
+      font-weight: 700;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 3px solid var(--orange);
+      padding-bottom: 4px;
+      margin: 32px 0 48px;
+      transition: color 0.2s;
+    }
+
+    .contact-email:hover { color: var(--orange); }
+
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--charcoal);
+      text-decoration: none;
+      padding: 12px 20px;
+      border: 1px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .contact-link:hover {
+      border-color: var(--orange);
+      color: var(--orange);
+      transform: translate(-2px, -2px);
+      box-shadow: 3px 3px 0 var(--border);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--black);
+      padding: 28px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-copy {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: rgba(255,253,248,0.3);
+      letter-spacing: 0.08em;
+    }
+
+    .footer-tag {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--orange);
+      letter-spacing: 0.08em;
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .fade-up:nth-child(2) { transition-delay: 0.1s; }
+    .fade-up:nth-child(3) { transition-delay: 0.2s; }
+    .fade-up:nth-child(4) { transition-delay: 0.3s; }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 0;
+      overflow: hidden;
+      background: var(--beige);
+    }
+
+    .marquee-track {
+      display: flex;
+      gap: 0;
+      animation: marquee 20s linear infinite;
+      width: max-content;
+    }
+
+    .marquee-item {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      padding: 0 32px;
+      white-space: nowrap;
+    }
+
+    .marquee-item span {
+      color: var(--orange);
+      margin: 0 8px;
+    }
+
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+
+    /* ── SCROLL INDICATOR ── */
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gray);
+      animation: float 2.5s ease-in-out infinite;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gray), transparent);
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(8px); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      section { padding: 72px 24px; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 100px 24px 60px;
+      }
+
+      .hero-visual { display: none; }
+
+      .case-card,
+      .case-card.featured {
+        grid-template-columns: 1fr;
+      }
+
+      .case-visual { min-height: 200px; }
+
+      .about-grid { grid-template-columns: 1fr; gap: 48px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+    }
+
+    /* ── KIRANA MOCKUP ── */
+    .mockup-kirana {
+      width: 155px;
+      background: #0F2318;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+      font-family: var(--font-body);
+    }
+
+    .kirana-header {
+      background: #0A1A10;
+      padding: 10px 14px 8px;
+    }
+
+    .kirana-greeting {
+      font-size: 7px;
+      color: rgba(255,255,255,0.4);
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+    }
+
+    .kirana-body { padding: 10px 12px; }
+
+    .kirana-total-card {
+      background: #1A3326;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(45,106,79,0.3);
+    }
+
+    .kirana-total-label {
+      font-size: 6px;
+      color: rgba(255,255,255,0.4);
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+
+    .kirana-total-num {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      font-family: var(--font-display);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .kirana-why {
+      font-size: 6px;
+      color: #4CAF82;
+      font-family: var(--font-mono);
+    }
+
+    .kirana-actions {
+      display: flex;
+      gap: 5px;
+      margin-bottom: 8px;
+    }
+
+    .kirana-btn-primary {
+      flex: 1;
+      background: #2D6A4F;
+      color: #fff;
+      text-align: center;
+      padding: 5px 4px;
+      border-radius: 4px;
+      font-size: 6px;
+      font-family: var(--font-mono);
+    }
+
+    .kirana-btn-secondary {
+      flex: 1;
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.5);
+      text-align: center;
+      padding: 5px 4px;
+      border-radius: 4px;
+      font-size: 6px;
+      font-family: var(--font-mono);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .kirana-breakdown { margin-top: 4px; }
+
+    .kirana-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      font-size: 7px;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .kirana-quote {
+      margin-top: 20px;
+      padding: 12px 16px;
+      background: rgba(45,106,79,0.08);
+      border-left: 2px solid #2D6A4F;
+      font-size: 13px;
+      color: var(--charcoal);
+      font-style: italic;
+      line-height: 1.5;
+    }
+
+    .kirana-quote span {
+      display: block;
+      font-size: 11px;
+      font-style: normal;
+      color: var(--gray);
+      margin-top: 4px;
+      font-family: var(--font-mono);
+    }
+
+    /* ── BANKING MOCKUP ── */
+    .mockup-banking {
+      width: 155px;
+      background: #0D1B2E;
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.6);
+      font-family: var(--font-body);
+    }
+
+    .banking-header {
+      background: #081525;
+      padding: 12px 14px 10px;
+    }
+
+    .banking-greeting {
+      font-size: 6px;
+      color: rgba(255,255,255,0.35);
+      font-family: var(--font-mono);
+      margin-bottom: 6px;
+    }
+
+    .banking-balance-label {
+      font-size: 6px;
+      color: rgba(255,255,255,0.4);
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .banking-balance {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      font-family: var(--font-display);
+      line-height: 1.2;
+    }
+
+    .banking-updated {
+      font-size: 5.5px;
+      color: rgba(255,255,255,0.2);
+      font-family: var(--font-mono);
+      margin-top: 2px;
+    }
+
+    .banking-body { padding: 10px 12px; }
+
+    .banking-section-title {
+      font-size: 6px;
+      color: rgba(255,255,255,0.35);
+      font-family: var(--font-mono);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .banking-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 5px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+
+    .banking-icon { font-size: 10px; }
+
+    .banking-row-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+    }
+
+    .banking-row-name {
+      font-size: 7px;
+      color: rgba(255,255,255,0.8);
+      font-weight: 500;
+    }
+
+    .banking-row-sub {
+      font-size: 5.5px;
+      color: rgba(255,255,255,0.25);
+      font-family: var(--font-mono);
+    }
+
+    .banking-amount {
+      font-size: 7px;
+      font-family: var(--font-mono);
+      font-weight: 500;
+    }
+
+    .banking-amount.plus { color: #4CAF82; }
+    .banking-amount.minus { color: rgba(255,255,255,0.4); }
+
+    .banking-cta {
+      background: #1565C0;
+      color: #fff;
+      text-align: center;
+      padding: 6px;
+      border-radius: 4px;
+      font-size: 6px;
+      font-family: var(--font-mono);
+      margin-top: 8px;
+      letter-spacing: 0.05em;
+    }
+
+    .banking-nav {
+      background: #081525;
+      padding: 7px 12px;
+      display: flex;
+      justify-content: space-around;
+    }
+
+    .banking-nav-item {
+      font-size: 5.5px;
+      color: rgba(255,255,255,0.25);
+      font-family: var(--font-mono);
+    }
+
+    .banking-nav-item.active { color: #4B9EFF; }
+
+    /* ── WIP BADGE ── */
+    .wip-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      background: rgba(138,136,128,0.12);
+      border: 1px solid var(--border);
+      font-family: var(--font-mono);
+      font-size: 9px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 20px;
+      width: fit-content;
+    }
+
+    .wip-dot {
+      width: 5px; height: 5px;
+      background: var(--gray);
+      border-radius: 50%;
+    }
+
+    .orange-dot {
+      background: var(--orange);
+      animation: blink 1.5s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Cursor -->
+  <div class="cursor" id="cursor"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-logo">PR.portfolio</a>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="mailto:punithraj551@gmail.com" style="color: var(--orange);">Hire me</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <div class="hero-label">Available for internships · Bengaluru</div>
+      <h1 class="hero-title">
+        Designing<br/>
+        for <em>human</em><br/>
+        behaviour
+      </h1>
+      <p class="hero-bio">
+        I'm Punith — a <strong>UX designer</strong> with a background in <strong>psychology</strong>.
+        I design digital products that feel intuitive because I understand 
+        <em>why people do what they do</em>, not just what they click.
+      </p>
+      <div class="hero-cta">
+        <a href="#work" class="btn-primary">View my work →</a>
+        <a href="https://punithraj-ks.github.io/punithraj22.github.io" target="_blank" class="btn-secondary">Portfolio ↗</a>
+        <a href="Punith_Raj_Resume.pdf" download class="btn-secondary" style="border-color:var(--orange);color:var(--orange);">↓ Resume</a>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="hero-card">
+        <div class="hero-avatar" style="width:72px;height:72px;border-radius:50%;overflow:hidden;background:var(--black);flex-shrink:0;">
+          <img src="punith-photo.jpg" alt="Punith Raj" style="width:100%;height:100%;object-fit:cover;object-position:top;" />
+        </div>
+        <div class="hero-card-name">Punith Raj</div>
+        <div class="hero-card-role">UX Designer · Open to Work</div>
+        <div class="hero-stats">
+          <div class="stat-item">
+            <div class="stat-num">3</div>
+            <div class="stat-label">Case Studies</div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-num">1</div>
+            <div class="stat-label">Year Focused</div>
+          </div>
+        </div>
+        <div class="skills-chips">
+          <span class="chip">Figma</span>
+          <span class="chip">User Research</span>
+          <span class="chip">Prototyping</span>
+          <span class="chip">Psychology</span>
+          <span class="chip">Mobile-first</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      scroll
+    </div>
+  </section>
+
+  <!-- Marquee -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">User Research <span>✦</span></span>
+      <span class="marquee-item">Interaction Design <span>✦</span></span>
+      <span class="marquee-item">Prototyping <span>✦</span></span>
+      <span class="marquee-item">Figma <span>✦</span></span>
+      <span class="marquee-item">Information Architecture <span>✦</span></span>
+      <span class="marquee-item">Mobile-First Design <span>✦</span></span>
+      <span class="marquee-item">Psychology-Led UX <span>✦</span></span>
+      <span class="marquee-item">Design Systems <span>✦</span></span>
+      <!-- duplicate for seamless loop -->
+      <span class="marquee-item">User Research <span>✦</span></span>
+      <span class="marquee-item">Interaction Design <span>✦</span></span>
+      <span class="marquee-item">Prototyping <span>✦</span></span>
+      <span class="marquee-item">Figma <span>✦</span></span>
+      <span class="marquee-item">Information Architecture <span>✦</span></span>
+      <span class="marquee-item">Mobile-First Design <span>✦</span></span>
+      <span class="marquee-item">Psychology-Led UX <span>✦</span></span>
+      <span class="marquee-item">Design Systems <span>✦</span></span>
+    </div>
+  </div>
+
+  <!-- Work -->
+  <section id="work">
+    <div class="section-label">Selected Work</div>
+    <h2 class="section-title">Case Studies</h2>
+    <p class="section-sub">Three projects exploring real problems in the Indian digital product space.</p>
+
+    <div class="work-grid">
+
+      <!-- Case 1: Happenin — FEATURED -->
+      <a href="happenin.html" class="case-card featured fade-up">
+        <div class="case-info">
+          <div>
+            <div class="case-tag">Event Tech · Mobile + Desktop · Indian Market</div>
+            <div class="case-num">01 — Featured Project</div>
+            <h3 class="case-title">Happenin — Event Discovery & Booking Platform</h3>
+            <p class="case-desc">
+              India's event booking apps hide fees, bury flows in 8+ steps, and fail at venues
+              when WiFi drops. I redesigned the entire experience — transparent pricing from
+              first tap, a 3-step booking flow, offline-capable QR tickets, and a full
+              mobile-first design system with 20 screens across both platforms.
+            </p>
+            <div class="case-meta">
+              <div class="meta-item">
+                <span class="meta-key">Screens</span>
+                <span class="meta-val">20 + Wireframes</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-key">Platform</span>
+                <span class="meta-val">Mobile + Desktop</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-key">Deliverables</span>
+                <span class="meta-val">Prototype + Design System</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-key">Tools</span>
+                <span class="meta-val">Figma</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-arrow">↗</div>
+        </div>
+
+        <!-- Happenin app mockup -->
+        <div class="case-visual">
+          <div class="case-visual-inner">
+            <div class="mockup-happenin">
+              <div class="mockup-header">
+                <span class="mockup-logo">happenin</span>
+                <span style="font-size:10px; color:#FF6B35;">📍 BLR</span>
+              </div>
+              <div class="mockup-body">
+                <div class="mockup-chip-row">
+                  <span class="mockup-chip active">Today</span>
+                  <span class="mockup-chip">Weekend</span>
+                  <span class="mockup-chip">Free</span>
+                </div>
+                <div class="mockup-card">
+                  <div class="mockup-card-img">🎵</div>
+                  <div class="mockup-card-title">Soul & Jazz Night – Live at Indigo</div>
+                  <div class="mockup-price">₹499 incl. all fees</div>
+                  <div class="mockup-btn">Get tickets</div>
+                </div>
+                <div class="mockup-card">
+                  <div class="mockup-card-img">🏀</div>
+                  <div class="mockup-card-title">Bengaluru Bulls vs Delhi Titans</div>
+                  <div class="mockup-price">₹799 incl. all fees</div>
+                  <div class="mockup-btn">Get tickets</div>
+                </div>
+              </div>
+              <div class="mockup-nav">
+                <div class="mockup-nav-dot active"></div>
+                <div class="mockup-nav-dot"></div>
+                <div class="mockup-nav-dot"></div>
+                <div class="mockup-nav-dot"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Case 2: Kirana Store — REAL PROJECT -->
+      <a href="kirana.html" class="case-card fade-up">
+        <div class="case-info">
+          <div>
+            <div class="case-tag" style="border-color: #2D6A4F; color: #2D6A4F;">FinTech · Research-led</div>
+            <div class="case-num">02 — Research + Psychology Framework</div>
+            <h3 class="case-title">Kirana Khata — Reducing Financial Anxiety</h3>
+            <p class="case-desc">
+              Kirana store owners handle 50+ transactions daily and end each day unsure if their mental math matches reality. I interviewed 5 real store owners, identified the core insight — <em>"one believable daily number beats a dashboard"</em> — and designed around emotional reassurance, not features.
+            </p>
+            <div class="case-meta">
+              <div class="meta-item">
+                <span class="meta-key">Research</span>
+                <span class="meta-val">5 User Interviews</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-key">Testing</span>
+                <span class="meta-val">5 Participants</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-key">Framework</span>
+                <span class="meta-val">Psychology-led UX</span>
+              </div>
+            </div>
+            <div class="kirana-quotes">
+              <div class="kirana-quote">"This is simple. I would actually use this. It is what I exactly need."<span> — Grocery store owner, Bengaluru</span></div>
+            </div>
+          </div>
+            <div class="case-arrow" style="color: #2D6A4F;">↗</div>
+        </div>
+
+        <div class="case-visual" style="background: #0D1F16;">
+          <div class="case-visual-inner">
+            <!-- Kirana App Mockup -->
+            <div class="mockup-kirana">
+              <div class="kirana-header">
+                <div class="kirana-greeting">Good evening, Punith</div>
+              </div>
+              <div class="kirana-body">
+                <div class="kirana-total-card">
+                  <div class="kirana-total-label">Today's Total</div>
+                  <div class="kirana-total-num">₹12,000</div>
+                  <div class="kirana-why">Why this number? →</div>
+                </div>
+                <div class="kirana-actions">
+                  <div class="kirana-btn-primary">+ Add Sale</div>
+                  <div class="kirana-btn-secondary">End Day</div>
+                </div>
+                <div class="kirana-breakdown">
+                  <div class="kirana-row"><span>Cash</span><span style="color:#2D6A4F;">₹8,400</span></div>
+                  <div class="kirana-row"><span>UPI</span><span style="color:#2D6A4F;">₹4,200</span></div>
+                  <div class="kirana-row"><span>Expenses</span><span style="color:#C62828;">−₹600</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <!-- Case 3: Banking App -->
+      <a href="banking.html" class="case-card fade-up">
+        <div class="case-info">
+          <div>
+            <div class="case-tag" style="border-color: #1565C0; color: #1565C0;">FinTech · UI Design · Design Thinking</div>
+            <div class="case-num">03 — Hypothesis-Driven Design</div>
+            <h3 class="case-title">Calm Banking — Does Visual Restraint Build More Trust?</h3>
+            <p class="case-desc">
+              I started with a hypothesis: calm, minimal interfaces build more trust than dense, engagement-optimised ones. 
+              Designed 5 core banking screens using semantic-only colour, strict 8px grid, and intentional negative space. 
+              Validated with 5 participants — all 5 preferred the restrained design over a feature-rich alternative. 
+              Sometimes the right answer is knowing what <em>not</em> to design.
+            </p>
+            <div class="case-meta">
+              <div class="meta-item">
+                <span class="meta-key">Screens</span>
+                <span class="meta-val">5 Core Flows</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-key">Testing</span>
+                <span class="meta-val">5/5 Preferred Calm</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-key">Focus</span>
+                <span class="meta-val">Invisible Design</span>
+              </div>
+            </div>
+          </div>
+          <div class="case-arrow" style="color: #1565C0;">↗</div>
+        </div>
+
+        <div class="case-visual" style="background:#0A1628; padding:0; overflow:hidden;">
+          <img src="banking-thumb.png" alt="Calm Banking UI screens" style="width:100%;height:100%;object-fit:cover;object-position:top;opacity:0.92;transition:opacity 0.3s;" />
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="section-label" style="color:var(--orange);">About Me</div>
+    <h2 class="section-title">Psychology meets<br/><em style="font-style:italic; color:var(--orange);">design.</em></h2>
+
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          I studied <strong>psychology</strong> — which means I spent years learning 
+          how people think, make decisions, and respond to their environment. 
+          Then I discovered UX design, and realised: <em>this is applied psychology.</em>
+        </p>
+        <p>
+          Every design decision I make is rooted in understanding 
+          <strong>human behaviour</strong> — why someone hesitates at a checkout, 
+          why a notification gets ignored, why a product gets abandoned 
+          after two uses. I don't just ask "does this look good?" 
+          I ask "does this make sense for how people actually think?"
+        </p>
+        <p>
+          I'm based in <strong>Bengaluru</strong>, open to internship 
+          and junior UX roles, and I'm learning every single day. 
+          I'm not the most experienced designer in the room — but I 
+          might be the one who <em>understands users</em> the most deeply.
+        </p>
+        <div style="margin-top: 32px;">
+          <a href="mailto:punithraj551@gmail.com" class="btn-primary" style="display: inline-flex;">Let's talk →</a>
+        </div>
+      </div>
+
+      <div class="about-right">
+        <div class="skills-section">
+          <div class="skills-title">Skills</div>
+          <div class="skill-row">
+            <span class="skill-name">Figma & Prototyping</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width: 80%"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">User Research</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width: 60%"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Information Architecture</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width: 70%"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">UI Design</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width: 72%"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Usability Testing</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width: 45%"></div></div>
+          </div>
+          <div class="skill-row">
+            <span class="skill-name">Design Systems</span>
+            <div class="skill-bar-wrap"><div class="skill-bar" style="width: 65%"></div></div>
+          </div>
+        </div>
+
+        <div class="process-list">
+          <div class="skills-title" style="margin-top:40px;">My Process</div>
+          <div class="process-item">
+            <span class="process-num">01</span>
+            <div class="process-content">
+              <div class="process-name">Understand</div>
+              <div class="process-desc">Research users, context, and constraints before touching Figma.</div>
+            </div>
+          </div>
+          <div class="process-item">
+            <span class="process-num">02</span>
+            <div class="process-content">
+              <div class="process-name">Define</div>
+              <div class="process-desc">Synthesise insights into clear problem statements and user needs.</div>
+            </div>
+          </div>
+          <div class="process-item">
+            <span class="process-num">03</span>
+            <div class="process-content">
+              <div class="process-name">Design</div>
+              <div class="process-desc">Wireframe, prototype, and iterate with real users in the loop.</div>
+            </div>
+          </div>
+          <div class="process-item">
+            <span class="process-num">04</span>
+            <div class="process-content">
+              <div class="process-name">Validate</div>
+              <div class="process-desc">Test assumptions, measure outcomes, refine based on evidence.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="contact-inner">
+      <div class="section-label" style="justify-content:center;">Get in Touch</div>
+      <h2 class="section-title">Let's work<br/><em style="font-style:italic; color:var(--orange);">together.</em></h2>
+      <p class="section-sub" style="margin: 0 auto 0; text-align:center;">
+        I'm actively looking for UX internship opportunities. 
+        If you're building something interesting, I'd love to hear about it.
+      </p>
+      <a href="mailto:punithraj551@gmail.com" class="contact-email">
+        punithraj551@gmail.com
+      </a>
+      <div class="contact-links">
+        <a href="https://www.linkedin.com/in/punithraj22" target="_blank" class="contact-link">
+          ↗ LinkedIn
+        </a>
+        <a href="https://punithraj-ks.github.io/punithraj22.github.io" target="_blank" class="contact-link">
+          ↗ Live Portfolio
+        </a>
+        <a href="mailto:punithraj551@gmail.com" class="contact-link">
+          ↗ Email Me
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <span class="footer-copy">© 2026 Punith Raj. All rights reserved.</span>
+    <span class="footer-tag">UX Designer · Bengaluru · Open to Work</span>
+  </footer>
+
+  <script>
+    // Custom cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+
+    document.addEventListener('mousemove', e => {
+      mx = e.clientX; my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    });
+
+    function animateRing() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    document.querySelectorAll('a, button').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(2.5)';
+        ring.style.opacity = '0';
+      });
+      el.addEventListener('mouseleave', () => {
+        cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+        ring.style.opacity = '0.5';
+      });
+    });
+
+    // Scroll fade-in
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Hero elements animate on load
+    window.addEventListener('load', () => {
+      document.querySelectorAll('.hero
